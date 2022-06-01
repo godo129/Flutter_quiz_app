@@ -37,13 +37,13 @@ class _MyAppState extends State<MyApp> {
 
   void _answerQuestion() {
 
-    if (_questionIndex < questions.length-1) {
+    if (_questionIndex < questions.length) {
       setState(() {
         _questionIndex = _questionIndex + 1;
       });
     } else {
-
-      _questionIndex = 0;
+      // _questionIndex = 0;
+      print('No more questions!');
     }
     print(_questionIndex);
   }
@@ -56,7 +56,7 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: Text('My First App'),
         ),
-        body: Column(
+        body: _questionIndex < questions.length ? Column(
           children: [
             Question(
               questions[_questionIndex]['questionText'] as String,
@@ -66,7 +66,7 @@ class _MyAppState extends State<MyApp> {
               return Answer(_answerQuestion, answer);
             }).toList() // ... 은 리스트 내부를 밖으로 꺼내 주는 것 
           ],
-        ),
+        ) : Center(child: Text('You did it!'),),
       ),
     );
   }
