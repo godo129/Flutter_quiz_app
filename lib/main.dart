@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_complete_guide/result.dart';
 
 import './question.dart';
 import './answer.dart';
+import './quiz.dart';
+import './result.dart';
 
 // void main() {
 //   runApp(MyApp());
@@ -18,7 +21,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final questions = [
+  final _questions = [
       {
         'questionText': 'What\'s your favorite color?',
         'answers': ['Black', 'Pink', 'Purple', 'Orange'],
@@ -37,7 +40,7 @@ class _MyAppState extends State<MyApp> {
 
   void _answerQuestion() {
 
-    if (_questionIndex < questions.length) {
+    if (_questionIndex < _questions.length) {
       setState(() {
         _questionIndex = _questionIndex + 1;
       });
@@ -56,17 +59,9 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: Text('My First App'),
         ),
-        body: _questionIndex < questions.length ? Column(
-          children: [
-            Question(
-              questions[_questionIndex]['questionText'] as String,
-            ),
-            ...(questions[_questionIndex]['answers'] as List<String>)
-                .map((answer) {
-              return Answer(_answerQuestion, answer);
-            }).toList() // ... 은 리스트 내부를 밖으로 꺼내 주는 것 
-          ],
-        ) : Center(child: Text('You did it!'),),
+        body: _questionIndex < _questions.length 
+        ? Quiz(answerQuestion: _answerQuestion, questions: _questions, questionIndex: _questionIndex,)
+        : Result(),
       ),
     );
   }
